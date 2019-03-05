@@ -1,6 +1,6 @@
 ﻿namespace C698Project
 {
-    partial class AddPart
+    partial class ModifyPart
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPart));
-            this.addPartLabel = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModifyPart));
+            this.modifyPartLabel = new System.Windows.Forms.Label();
             this.idTextbox = new System.Windows.Forms.TextBox();
             this.idLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -50,16 +50,16 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // addPartLabel
+            // modifyPartLabel
             // 
-            this.addPartLabel.AutoSize = true;
-            this.addPartLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addPartLabel.ForeColor = System.Drawing.Color.DarkBlue;
-            this.addPartLabel.Location = new System.Drawing.Point(46, 23);
-            this.addPartLabel.Name = "addPartLabel";
-            this.addPartLabel.Size = new System.Drawing.Size(79, 20);
-            this.addPartLabel.TabIndex = 0;
-            this.addPartLabel.Text = "Add Part";
+            this.modifyPartLabel.AutoSize = true;
+            this.modifyPartLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.modifyPartLabel.ForeColor = System.Drawing.Color.DarkBlue;
+            this.modifyPartLabel.Location = new System.Drawing.Point(46, 23);
+            this.modifyPartLabel.Name = "modifyPartLabel";
+            this.modifyPartLabel.Size = new System.Drawing.Size(99, 20);
+            this.modifyPartLabel.TabIndex = 0;
+            this.modifyPartLabel.Text = "Modify Part";
             // 
             // idTextbox
             // 
@@ -224,7 +224,7 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // AddPart
+            // ModifyPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -247,10 +247,10 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.idLabel);
             this.Controls.Add(this.idTextbox);
-            this.Controls.Add(this.addPartLabel);
+            this.Controls.Add(this.modifyPartLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "AddPart";
-            this.Text = "AddPart";
+            this.Name = "ModifyPart";
+            this.Text = "ModifyPart";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,7 +258,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label addPartLabel;
+        private System.Windows.Forms.Label modifyPartLabel;
         private System.Windows.Forms.TextBox idTextbox;
         private System.Windows.Forms.Label idLabel;
         private System.Windows.Forms.Label nameLabel;

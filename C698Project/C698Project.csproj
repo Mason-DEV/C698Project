@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModifyPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModifyPart.Designer.cs">
+      <DependentUpon>ModifyPart.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddPart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ModifyPart.resx">
+      <DependentUpon>ModifyPart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddPart.resx">
       <DependentUpon>AddPart.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,6 +90,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
