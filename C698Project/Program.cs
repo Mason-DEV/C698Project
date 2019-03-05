@@ -16,7 +16,9 @@ namespace C698Project
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainScreen());
+            //Application.Run(new MainScreen());
+            Application.Run(new AddPart());
+
         }
     }
 }
