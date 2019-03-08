@@ -15,6 +15,8 @@ namespace C698Project
         public ModifyPart()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             variableChange();
         }
 
@@ -25,6 +27,7 @@ namespace C698Project
 
         private void inHouseRadio_CheckedChanged(object sender, EventArgs e)
         {
+
             variableChange();
         }
 
@@ -40,6 +43,13 @@ namespace C698Project
                 variableTextbox.Text = "Mach ID";
 
             }
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Owner.Show();
+            this.Close();
+            
         }
     }
 }

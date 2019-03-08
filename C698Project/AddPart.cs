@@ -15,6 +15,8 @@ namespace C698Project
         public AddPart()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             variableChange();
         }
 
@@ -40,6 +42,12 @@ namespace C698Project
                 variableTextbox.Text = "Mach ID";
 
             }
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Owner.Show();
+            this.Close();
         }
     }
 }
