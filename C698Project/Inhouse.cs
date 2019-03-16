@@ -8,5 +8,14 @@ namespace C698Project
 {
     class Inhouse
     {
+        private int machineID;
+
+        public void setMachineID(int machineIDSet) {
+            machineID = machineIDSet;
+        }
+
+        public int getMachineID() {
+            return machineID;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -30,13 +31,20 @@ namespace C698Project
 
         private void partsModifyButton_Click(object sender, EventArgs e)
         {
-            //For modify add code that makes it so the user has to select an item from the dropdown
-            //After item selected, allow them to modify
-            //Pull in data from selected item
-            Form modifyPart = new ModifyPart();
+
+            DataGridViewRow row = this.partsDataGridView.SelectedRows[0];
+            int selectedID = (int)row.Cells["Part ID"].Value;
+            Part partToModify = new Part();
+            partToModify.setPartID(selectedID);
+            Console.WriteLine("Setting id to" + selectedID);
+
+            Form modifyPart = new ModifyPart(selectedID);
             modifyPart.Owner = this;
             modifyPart.Show();
             this.Hide();
+
+           
+
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -58,6 +66,62 @@ namespace C698Project
             modifyProduct.Owner = this;
             modifyProduct.Show();
             this.Hide();
+        }
+
+        private void MainScreen_Load(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True");
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
+            
+            SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
+
+            DataTable dtRecord = new DataTable();
+            sqlDataAdap.Fill(dtRecord);
+            partsDataGridView.DataSource = dtRecord;
+        
+
+
+        }
+
+        private void partsDeleteButton_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show("Are you sure to delete this part?",
+                                      "Part Deletion",
+                                      MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                // If 'Yes', do something here.
+                DataGridViewRow row = this.partsDataGridView.SelectedRows[0];
+                int selectedID = (int)row.Cells["Part ID"].Value;
+   
+                Inventory lookup = new Inventory();
+                Part toDelete = lookup.LookupPart(selectedID);
+                bool deleted = lookup.deletePart(toDelete);
+                if (deleted) {
+
+                    SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True");
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
+
+                    SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
+
+                    DataTable dtRecord = new DataTable();
+                    sqlDataAdap.Fill(dtRecord);
+                    partsDataGridView.DataSource = dtRecord;
+                }
+            
+            }
+            else
+            {
+                // If 'No', do something here.
+            }
         }
     }
 }

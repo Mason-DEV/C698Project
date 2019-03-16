@@ -8,5 +8,16 @@ namespace C698Project
 {
     class Outsourced
     {
+        private string companyName;
+
+        public void setCompanyName(string name)
+        {
+            companyName = name;
+        }
+
+        public string getCompanyName()
+        {
+            return companyName;
+        }
     }
 }

@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
             this.InventoryManagmentSystem = new System.Windows.Forms.Label();
             this.groupParts = new System.Windows.Forms.GroupBox();
@@ -47,10 +50,17 @@
             this.productsSearchText = new System.Windows.Forms.TextBox();
             this.productsSearchButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.dBDataSet = new C698Project.DBDataSet();
+            this.dBDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.partTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.partTableTableAdapter = new C698Project.DBDataSetTableAdapters.partTableTableAdapter();
             this.groupParts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partsDataGridView)).BeginInit();
             this.groupProducts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // InventoryManagmentSystem
@@ -97,6 +107,7 @@
             this.partsDeleteButton.TabIndex = 7;
             this.partsDeleteButton.Text = "Delete";
             this.partsDeleteButton.UseVisualStyleBackColor = true;
+            this.partsDeleteButton.Click += new System.EventHandler(this.partsDeleteButton_Click);
             // 
             // partsModifyButton
             // 
@@ -120,9 +131,42 @@
             // 
             // partsDataGridView
             // 
-            this.partsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.partsDataGridView.Location = new System.Drawing.Point(10, 92);
+            this.partsDataGridView.AllowUserToAddRows = false;
+            this.partsDataGridView.AllowUserToDeleteRows = false;
+            this.partsDataGridView.AllowUserToResizeColumns = false;
+            this.partsDataGridView.AllowUserToResizeRows = false;
+            this.partsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.partsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.partsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.partsDataGridView.ColumnHeadersHeight = 30;
+            this.partsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.partsDataGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.partsDataGridView.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.partsDataGridView.Location = new System.Drawing.Point(6, 92);
             this.partsDataGridView.Name = "partsDataGridView";
+            this.partsDataGridView.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.partsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.partsDataGridView.RowHeadersVisible = false;
+            this.partsDataGridView.RowHeadersWidth = 10;
+            this.partsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.partsDataGridView.ShowCellErrors = false;
+            this.partsDataGridView.ShowCellToolTips = false;
+            this.partsDataGridView.ShowEditingIcon = false;
+            this.partsDataGridView.ShowRowErrors = false;
             this.partsDataGridView.Size = new System.Drawing.Size(515, 163);
             this.partsDataGridView.TabIndex = 2;
             // 
@@ -198,9 +242,14 @@
             // 
             // productsDataGridView
             // 
+            this.productsDataGridView.AllowUserToAddRows = false;
+            this.productsDataGridView.AllowUserToDeleteRows = false;
+            this.productsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.productsDataGridView.Location = new System.Drawing.Point(11, 92);
             this.productsDataGridView.Name = "productsDataGridView";
+            this.productsDataGridView.ReadOnly = true;
+            this.productsDataGridView.RowHeadersVisible = false;
             this.productsDataGridView.Size = new System.Drawing.Size(515, 163);
             this.productsDataGridView.TabIndex = 3;
             // 
@@ -230,6 +279,25 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // dBDataSet
+            // 
+            this.dBDataSet.DataSetName = "DBDataSet";
+            this.dBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // dBDataSetBindingSource
+            // 
+            this.dBDataSetBindingSource.DataSource = this.dBDataSet;
+            this.dBDataSetBindingSource.Position = 0;
+            // 
+            // partTableBindingSource
+            // 
+            this.partTableBindingSource.DataMember = "partTable";
+            this.partTableBindingSource.DataSource = this.dBDataSet;
+            // 
+            // partTableTableAdapter
+            // 
+            this.partTableTableAdapter.ClearBeforeFill = true;
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -242,12 +310,16 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainScreen";
             this.Text = "Main Screen";
+            this.Load += new System.EventHandler(this.MainScreen_Load);
             this.groupParts.ResumeLayout(false);
             this.groupParts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partsDataGridView)).EndInit();
             this.groupProducts.ResumeLayout(false);
             this.groupProducts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.partTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,6 +345,10 @@
         private System.Windows.Forms.Button productsAddButton;
         private System.Windows.Forms.DataGridView productsDataGridView;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.BindingSource dBDataSetBindingSource;
+        private DBDataSet dBDataSet;
+        private System.Windows.Forms.BindingSource partTableBindingSource;
+        private DBDataSetTableAdapters.partTableTableAdapter partTableTableAdapter;
     }
 }
 

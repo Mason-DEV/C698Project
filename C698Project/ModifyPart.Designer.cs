@@ -38,7 +38,7 @@
             this.maxLabel = new System.Windows.Forms.Label();
             this.minLabel = new System.Windows.Forms.Label();
             this.minTextbox = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.maxTextbox = new System.Windows.Forms.TextBox();
             this.variableLabel = new System.Windows.Forms.Label();
             this.inHouseRadio = new System.Windows.Forms.RadioButton();
             this.outsourcedRadio = new System.Windows.Forms.RadioButton();
@@ -133,13 +133,13 @@
             this.minTextbox.TabIndex = 10;
             this.minTextbox.Text = "Min";
             // 
-            // textBox1
+            // maxTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(188, 215);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(97, 20);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "Min";
+            this.maxTextbox.Location = new System.Drawing.Point(188, 215);
+            this.maxTextbox.Name = "maxTextbox";
+            this.maxTextbox.Size = new System.Drawing.Size(97, 20);
+            this.maxTextbox.TabIndex = 11;
+            this.maxTextbox.Text = "Max";
             // 
             // variableLabel
             // 
@@ -214,6 +214,7 @@
             this.saveButton.TabIndex = 19;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // cancelButton
             // 
@@ -239,7 +240,7 @@
             this.Controls.Add(this.outsourcedRadio);
             this.Controls.Add(this.inHouseRadio);
             this.Controls.Add(this.variableLabel);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.maxTextbox);
             this.Controls.Add(this.minTextbox);
             this.Controls.Add(this.minLabel);
             this.Controls.Add(this.maxLabel);
@@ -268,7 +269,7 @@
         private System.Windows.Forms.Label maxLabel;
         private System.Windows.Forms.Label minLabel;
         private System.Windows.Forms.TextBox minTextbox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox maxTextbox;
         private System.Windows.Forms.Label variableLabel;
         private System.Windows.Forms.RadioButton inHouseRadio;
         private System.Windows.Forms.RadioButton outsourcedRadio;

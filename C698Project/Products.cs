@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace C698Project
 {
     class Products
     {
-
         private int productID;
         private string name;
         private double price;
@@ -17,61 +17,61 @@ namespace C698Project
         private int max;
 
         //productID getter & setter
-        public void SetProductID(int productIDNum) {
+        public void setProductID(int productIDNum) {
             productID = productIDNum;
         }
 
-        public int GetProductID() {
+        public int getProductID() {
             return productID;
         }
 
         //name getter & setter
-        public void SetName(string productName) {
+        public void setName(string productName) {
             name = productName; 
         }
 
-        public string GetName() {
+        public string getName() {
             return name;
         }
 
         //price getter & setter
-        public void SetPrice(double productPrice) {
+        public void setPrice(double productPrice) {
             price = productPrice;
         }
 
-        public double GetPrice() {
+        public double getPrice() {
             return price;
         }
 
         //inStock getter & setter
-        public void SetinStock(int productInStock)
+        public void setinStock(int productInStock)
         {
             inStock = productInStock;
         }
 
-        public int GetInStock()
+        public int getInStock()
         {
             return inStock;
         }
 
         //min getter & setter
-        public void SetMin(int productMin)
+        public void setMin(int productMin)
         {
             min = productMin;
         }
 
-        public int GetProductMin()
+        public int getProductMin()
         {
             return min;
         }
 
         //max getter & setter
-        public void SetMax(int productMax)
+        public void setMax(int productMax)
         {
             max = productMax;
         }
 
-        public int GetMax()
+        public int getMax()
         {
             return max;
         }
