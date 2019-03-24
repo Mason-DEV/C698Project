@@ -13,6 +13,11 @@ namespace C698Project
 {
     public partial class AddPart : Form
     {
+
+        int inHouseValue;
+        int outSourcedValue;
+        String companyName;
+        int machineID;
         public AddPart()
         {
             InitializeComponent();
@@ -63,14 +68,42 @@ namespace C698Project
 
             int partMax = Convert.ToInt32(maxTextbox.Text);
 
+            bool inHouse = inHouseRadio.Checked;
+
+            bool outsourced = outsourcedRadio.Checked;
+            //Need to set inHouse&outsource to 0 or 1 depending if T or F
+            
+
+            if (inHouse)
+            {
+                inHouseValue = 1;
+                outSourcedValue = 0;
+                machineID = Convert.ToInt32(variableTextbox.Text);
+            }
+            else {
+                inHouseValue = 0;
+                outSourcedValue = 1;
+                companyName = variableTextbox.Text;
+            }
+
+
+
             SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
 
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT COUNT(*) partID FROM partTable;";
+            cmd.CommandText = "SELECT MAX(partID) FROM partTable;";
             con.Open();
-            int partID = (Int32)cmd.ExecuteScalar() + 1;
+            int partID;
+            try {
+                partID = (Int32)cmd.ExecuteScalar();
+            } catch {
+                partID = 0;
+            }
+            
+            Console.WriteLine("sql  " + partID);
+            partID = partID + 1;
             con.Close();
             Console.WriteLine("Setting partID to " + partID);
             Part newPart = new Part();
@@ -80,6 +113,22 @@ namespace C698Project
             newPart.setMin(partMin);
             newPart.setMax(partMax);                  
             newPart.setPartID(partID);
+            if (inHouse)
+            {
+                newPart.getPartINFO(inHouseValue, outSourcedValue, null, machineID);
+                //Inhouse mach = new Inhouse();
+                //mach.setMachineID(machineID);
+                //mach.setInhouse(inHouseValue);
+                //mach.setoutsourced(outSourcedValue);
+                
+            }
+            else
+            {
+
+
+            }
+
+
             newPart.addThePart();
 
             this.Close();

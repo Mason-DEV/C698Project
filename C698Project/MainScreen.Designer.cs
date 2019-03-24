@@ -185,6 +185,7 @@
             this.partsSearchButton.TabIndex = 0;
             this.partsSearchButton.Text = "Search";
             this.partsSearchButton.UseVisualStyleBackColor = true;
+            this.partsSearchButton.Click += new System.EventHandler(this.partsSearchButton_Click);
             // 
             // groupProducts
             // 

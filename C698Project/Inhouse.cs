@@ -9,6 +9,8 @@ namespace C698Project
     class Inhouse
     {
         private int machineID;
+        private int inHouse;
+        private int outsourced;
 
         public void setMachineID(int machineIDSet) {
             machineID = machineIDSet;
@@ -16,6 +18,24 @@ namespace C698Project
 
         public int getMachineID() {
             return machineID;
+        }
+
+        public void setInhouse(int inHouseID) {
+            inHouse = inHouseID;
+        }
+
+        public int getInHouseID() {
+            return inHouse;
+        }
+
+        public void setoutsourced(int outsourcedID)
+        {
+            outsourced = outsourcedID;
+        }
+
+        public int getoutsourcedID()
+        {
+            return outsourced;
         }
     }
 }

@@ -14,7 +14,11 @@ namespace C698Project
     public partial class ModifyPart : Form
     {
         Part modifyPart = new Part();
-
+        Inhouse modifyInHouse = new Inhouse();
+        String inHouseValue;
+        String outSourceValue;
+        String machineID;
+        String companyName;
 
         public ModifyPart(int partID)
         {
@@ -26,13 +30,13 @@ namespace C698Project
             modifyPart.setPartID(partID);
 
 
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True");
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
 
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             con.Open();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "Select partID, name, inStock, price, min, max from partTable WHERE partID = @partID";
+            cmd.CommandText = "Select * from partTable WHERE partID = @partID";
             cmd.Parameters.AddWithValue("@partID", partID);
 
             String ID;
@@ -41,7 +45,8 @@ namespace C698Project
             String inStock;
             String min;
             String max;
-           
+
+                       
             SqlDataReader rdr = cmd.ExecuteReader();
             // Fill the strings with the values retrieved, convert to types as needed
             while (rdr.Read())
@@ -71,6 +76,24 @@ namespace C698Project
                 modifyPart.setMax(Convert.ToInt32(max));
                 maxTextbox.Text = max;
 
+                inHouseValue = rdr["inHouse"].ToString();
+                modifyInHouse.setInhouse(Convert.ToInt32(inHouseValue));
+                inHouseRadio.Checked = Convert.ToBoolean(Convert.ToInt32(inHouseValue));
+
+                outSourceValue = rdr["outSourced"].ToString();
+                modifyInHouse.setInhouse(Convert.ToInt32(outSourceValue));
+                outsourcedRadio.Checked = Convert.ToBoolean(Convert.ToInt32(outSourceValue));
+
+                if (inHouseRadio.Checked == true)
+                {
+                    machineID = rdr["machineID"].ToString();
+                    modifyInHouse.setMachineID(Convert.ToInt32(machineID));
+                    variableTextbox.Text = machineID;
+
+                }
+                else {
+                    
+                }
 
             }
             con.Close();
@@ -95,12 +118,12 @@ namespace C698Project
             if (outsourcedRadio.Checked == true)
             {
                 variableLabel.Text = "Company Name";
-                variableTextbox.Text = "Comp Nm";
+               // variableTextbox.Text = "Comp Nm";
             }
             else
             {
                 variableLabel.Text = "Machine ID";
-                variableTextbox.Text = "Mach ID";
+                //variableTextbox.Text = "Mach ID";
 
             }
         }
@@ -114,8 +137,37 @@ namespace C698Project
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            //Grab ID for the part we are changing
             int id = modifyPart.getParttID();
-            Console.WriteLine("Modify part id " +id);
+            //Grab fields on form and set those to Modify Part
+            String partName = partNameTextbox.Text;
+
+            Double partPrice = Convert.ToDouble(priceCostTextbox.Text);
+
+            int partInStock = Convert.ToInt32(invTextbox.Text);
+
+            int partMin = Convert.ToInt32(minTextbox.Text);
+
+            int partMax = Convert.ToInt32(maxTextbox.Text);
+
+            modifyPart.setMax(partMax);
+            modifyPart.setMin(partMin);
+            modifyPart.setinStock(partInStock);
+            modifyPart.setName(partName);
+            modifyPart.setPrice(partPrice);
+            
+            
+            //Call updatePart passing in ID and modifyPart
+            Inventory modify = new Inventory();
+            modifyInHouse.setInhouse(Convert.ToInt32(inHouseValue));
+            modifyInHouse.setMachineID(Convert.ToInt32(machineID));
+            modifyInHouse.setInhouse(Convert.ToInt32(outSourceValue));
+            modify.updatePart(id, modifyPart);
+            
+            this.Close();
+            MainScreen main = new MainScreen();
+            main.Show();
+
         }
     }
 }

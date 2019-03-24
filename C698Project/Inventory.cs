@@ -11,54 +11,96 @@ namespace C698Project
 {
     class Inventory
     {
-        System.Data.SqlClient.SqlConnection con;
-       
+
+
+        int inHouseID;
+        int outSourcedID;
+        int machineID;
+        string companyName = "null";
+
         public void addPart(Part part) {
+            //Need to get correct inHouse or Outsourced information
 
-            con = new System.Data.SqlClient.SqlConnection();
-            con.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True";
+            Console.WriteLine(inHouseID);
+            Console.WriteLine(outSourcedID);
+            Console.WriteLine(machineID);
+
+
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
             con.Open();
-            var query = "INSERT INTO [dbo].[partTable] ([partID], [name], [price], [inStock], [min], [max]) VALUES (@partID, @name, @price, @inStock, @min, @max); SELECT partID, name, price, inStock, min, max FROM partTable WHERE(partID = @partID)";
-            var cmd = new System.Data.SqlClient.SqlCommand();
-            cmd.CommandText = query;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@partID", part.getParttID());
-            cmd.Parameters.AddWithValue("@name", part.getName());
-            cmd.Parameters.AddWithValue("@price", part.getPrice());
-            cmd.Parameters.AddWithValue("@inStock", part.getInStock());
-            cmd.Parameters.AddWithValue("@min", part.getMin());
-            cmd.Parameters.AddWithValue("@max", part.getMax());
-            cmd.ExecuteNonQuery();
-         
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction();
 
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+               "INSERT INTO [dbo].[partTable] ([partID], [name], [price], [inStock], [min], [max], [inHouse], [outsourced] ,[companyName],[machineID]) VALUES (@partID, @name, @price, @inStock, @min, @max, @inHouseID,@outSourcedID,@companyName,@machineID); SELECT partID, name, price, inStock, min, max, inHouse, outsourced ,companyName,machineID FROM partTable WHERE(partID = @partID)";
+            command.Parameters.AddWithValue("@partID", part.getParttID());
+            command.Parameters.AddWithValue("@name", part.getName());
+            command.Parameters.AddWithValue("@price", part.getPrice());
+            command.Parameters.AddWithValue("@inStock", part.getInStock());
+            command.Parameters.AddWithValue("@min", part.getMin());
+            command.Parameters.AddWithValue("@max", part.getMax());
+            command.Parameters.AddWithValue("@inHouseID", inHouseID);
+            command.Parameters.AddWithValue("@outSourcedID", outSourcedID);
+            command.Parameters.AddWithValue("@companyName", companyName);
+            command.Parameters.AddWithValue("@machineID", machineID);
+            command.ExecuteNonQuery();
+            transaction.Commit();
             con.Close();
+
 
         }
 
-        public bool deletePart(Part part) {
-            //DELETE FROM[dbo].[partTable] WHERE(([partID] = @Original_partID) AND([price] = @Original_price) AND([inStock] = @Original_inStock) AND([min] = @Original_min) AND((@IsNull_max = 1 AND[max] IS NULL) OR([max] = @Original_max)))
-            con = new System.Data.SqlClient.SqlConnection();
-            con.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True";
-            con.Open();
-            var query = "DELETE FROM[dbo].[partTable] WHERE(([partID] = @partID) AND([price] = @price) AND ([inStock] = @inStock) AND([min] = @min) AND([max] = @max))";
-            var cmd = new System.Data.SqlClient.SqlCommand();
-            cmd.CommandText = query;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@partID", part.getParttID());
-            cmd.Parameters.AddWithValue("@price", part.getPrice());
-            cmd.Parameters.AddWithValue("@inStock", part.getInStock());
-            cmd.Parameters.AddWithValue("@min", part.getMin());
-            cmd.Parameters.AddWithValue("@max", part.getMax());
-            cmd.ExecuteNonQuery();
+        public void houseInfo(Inhouse info) {
+           inHouseID = info.getInHouseID();
+           outSourcedID = info.getoutsourcedID();
+            if (inHouseID == 1)
+            {
+                machineID = info.getMachineID();
+                companyName = "";
+            }
+            else
+            {
+                machineID = 0;
+                companyName = "Name";
+            }
+           
+        }
 
+        public bool deletePart(Part part) {
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction("SampleTransaction");
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+              "DELETE FROM[dbo].[partTable] WHERE(([partID] = @partID) AND([price] = @price) AND ([inStock] = @inStock) AND([min] = @min) AND([max] = @max))";
+            command.Parameters.AddWithValue("@partID", part.getParttID());
+            command.Parameters.AddWithValue("@price", part.getPrice());
+            command.Parameters.AddWithValue("@inStock", part.getInStock());
+            command.Parameters.AddWithValue("@min", part.getMin());
+            command.Parameters.AddWithValue("@max", part.getMax());
+            command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
 
             return true;
         }
 
         public Part LookupPart(int partID) {
             Console.WriteLine(partID);
-            con = new System.Data.SqlClient.SqlConnection();
-            con.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True";
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             con.Open();
             var query = "SELECT partID, name, price, inStock, min, max FROM dbo.partTable where partID = @partID";
             var cmd = new System.Data.SqlClient.SqlCommand();
@@ -108,8 +150,34 @@ namespace C698Project
         }
 
         public void updatePart(int partID, Part part) {
-        
-}
+            Console.WriteLine("Updating Part");
 
+
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction();
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+                "UPDATE partTable SET name = @name, price = @price, inStock = @inStock, min = @min, max = @max WHERE  partID = @partID;";
+            command.Parameters.AddWithValue("@partID", partID);
+            command.Parameters.AddWithValue("@name", part.getName());
+            command.Parameters.AddWithValue("@price", part.getPrice());
+            command.Parameters.AddWithValue("@inStock", part.getInStock());
+            command.Parameters.AddWithValue("@min", part.getMin());
+            command.Parameters.AddWithValue("@max", part.getMax());
+            var affected  = command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+            Console.WriteLine("Updated Part "+affected);
+
+        }
+       
     }
 }

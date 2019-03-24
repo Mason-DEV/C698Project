@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.C698Project.Properties.Settings.GlobalReference.Default.DBConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DBConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.C698Project.Properties.Settings.GlobalReference.Default.DBConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="partTableTableAdapter" GeneratorDataComponentClassName="partTableTableAdapter" Name="partTable" UserDataComponentName="partTableTableAdapter">
@@ -74,7 +74,7 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
               <Mapping SourceColumn="max" DataSetColumn="max" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="DBConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteQuery">
+              <DbSource ConnectionRef="DBConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteQuery" Modifier="Public" Name="DeleteQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteQuery">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [dbo].[partTable] WHERE (([partID] = @Original_partID) AND ([price] = @Original_price) AND ([inStock] = @Original_inStock) AND ([min] = @Original_min) AND ((@IsNull_max = 1 AND [max] IS NULL) OR ([max] = @Original_max)))</CommandText>
@@ -89,7 +89,7 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
                   </DbCommand>
                 </DeleteCommand>
               </DbSource>
-              <DbSource ConnectionRef="DBConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertQuery" Modifier="Public" Name="InsertQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="InsertQuery">
+              <DbSource ConnectionRef="DBConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertQuery" Modifier="Public" Name="InsertQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="InsertQuery">
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>INSERT INTO [dbo].[partTable] ([partID], [name], [price], [inStock], [min], [max]) VALUES (@partID, @name, @price, @inStock, @min, @max);
@@ -104,6 +104,27 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
+              </DbSource>
+              <DbSource ConnectionRef="DBConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateQuery" Modifier="Public" Name="UpdateQuery" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="UpdateQuery">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE [dbo].[partTable] SET [partID] = @partID, [name] = @name, [price] = @price, [inStock] = @inStock, [min] = @min, [max] = @max WHERE (([partID] = @Original_partID) AND ([price] = @Original_price) AND ([inStock] = @Original_inStock) AND ([min] = @Original_min) AND ((@IsNull_max = 1 AND [max] IS NULL) OR ([max] = @Original_max)));
+SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @partID)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="partID" ColumnName="partID" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@partID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="partID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="name" ColumnName="name" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="text" DbType="AnsiString" Direction="Input" ParameterName="@name" Precision="0" ProviderType="Text" Scale="0" Size="2147483647" SourceColumn="name" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="price" ColumnName="price" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@price" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="price" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="inStock" ColumnName="inStock" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@inStock" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="inStock" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="min" ColumnName="min" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@min" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="min" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="max" ColumnName="max" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@max" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="max" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_partID" ColumnName="partID" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_partID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="partID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_price" ColumnName="price" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Original_price" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="price" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_inStock" ColumnName="inStock" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_inStock" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="inStock" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_min" ColumnName="min" DataSourceName="[C:\USERS\MASON\DOCUMENTS\GITHUB\C698PROJECT\C698PROJECT\DB.MDF].dbo.partTable" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_min" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="min" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="IsNull_max" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@IsNull_max" Precision="0" Scale="0" Size="0" SourceColumn="max" SourceColumnNullMapping="true" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
               </DbSource>
             </Sources>
           </TableAdapter>
@@ -130,6 +151,10 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
               <xs:element name="inStock" msprop:Generator_ColumnVarNameInTable="columninStock" msprop:Generator_ColumnPropNameInRow="inStock" msprop:Generator_ColumnPropNameInTable="inStockColumn" msprop:Generator_UserColumnName="inStock" type="xs:int" />
               <xs:element name="min" msprop:Generator_ColumnVarNameInTable="columnmin" msprop:Generator_ColumnPropNameInRow="min" msprop:Generator_ColumnPropNameInTable="minColumn" msprop:Generator_UserColumnName="min" type="xs:int" />
               <xs:element name="max" msprop:Generator_ColumnVarNameInTable="columnmax" msprop:Generator_ColumnPropNameInRow="max" msprop:Generator_ColumnPropNameInTable="maxColumn" msprop:Generator_UserColumnName="max" type="xs:int" minOccurs="0" />
+              <xs:element name="inHouse" msprop:Generator_ColumnVarNameInTable="columninHouse" msprop:Generator_ColumnPropNameInRow="inHouse" msprop:Generator_ColumnPropNameInTable="inHouseColumn" msprop:Generator_UserColumnName="inHouse" type="xs:string" minOccurs="0" />
+              <xs:element name="outSource" msprop:Generator_ColumnVarNameInTable="columnoutSource" msprop:Generator_ColumnPropNameInRow="outSource" msprop:Generator_ColumnPropNameInTable="outSourceColumn" msprop:Generator_UserColumnName="outSource" type="xs:string" minOccurs="0" />
+              <xs:element name="companyName" msprop:Generator_ColumnVarNameInTable="columncompanyName" msprop:Generator_ColumnPropNameInRow="companyName" msprop:Generator_ColumnPropNameInTable="companyNameColumn" msprop:Generator_UserColumnName="companyName" type="xs:string" minOccurs="0" />
+              <xs:element name="machineID" msprop:Generator_ColumnVarNameInTable="columnmachineID" msprop:Generator_ColumnPropNameInRow="machineID" msprop:Generator_ColumnPropNameInTable="machineIDColumn" msprop:Generator_UserColumnName="machineID" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

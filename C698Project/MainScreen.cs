@@ -33,7 +33,8 @@ namespace C698Project
         {
 
             DataGridViewRow row = this.partsDataGridView.SelectedRows[0];
-            int selectedID = (int)row.Cells["Part ID"].Value;
+            int selectedID;
+            try { selectedID = (int)row.Cells["partID"].Value; } catch { selectedID = (int)row.Cells["Part ID"].Value; }
             Part partToModify = new Part();
             partToModify.setPartID(selectedID);
             Console.WriteLine("Setting id to" + selectedID);
@@ -70,21 +71,20 @@ namespace C698Project
 
         private void MainScreen_Load(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True");
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
 
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
-            
+           // cmd.CommandText = "Select * from partTable";
             SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
 
             DataTable dtRecord = new DataTable();
             sqlDataAdap.Fill(dtRecord);
+            sqlDataAdap.Update(dtRecord);
             partsDataGridView.DataSource = dtRecord;
-        
-
-
+       
         }
 
         private void partsDeleteButton_Click(object sender, EventArgs e)
@@ -96,14 +96,14 @@ namespace C698Project
             {
                 // If 'Yes', do something here.
                 DataGridViewRow row = this.partsDataGridView.SelectedRows[0];
-                int selectedID = (int)row.Cells["Part ID"].Value;
-   
+                int selectedID;
+                try { selectedID = (int)row.Cells["partID"].Value; } catch { selectedID = (int)row.Cells["Part ID"].Value; }
                 Inventory lookup = new Inventory();
                 Part toDelete = lookup.LookupPart(selectedID);
                 bool deleted = lookup.deletePart(toDelete);
                 if (deleted) {
 
-                    SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Mason\Documents\GitHub\C698Project\C698Project\DB.mdf;Integrated Security=True");
+                    SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
 
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = con;
@@ -111,9 +111,12 @@ namespace C698Project
                     cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
 
                     SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
+                    
 
                     DataTable dtRecord = new DataTable();
+                    sqlDataAdap.Update(dtRecord);
                     sqlDataAdap.Fill(dtRecord);
+                    
                     partsDataGridView.DataSource = dtRecord;
                 }
             
@@ -122,6 +125,28 @@ namespace C698Project
             {
                 // If 'No', do something here.
             }
+        }
+
+        private void partsSearchButton_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+            //cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
+            cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit'  FROM dbo.partTable WHERE partID LIKE @Search OR name LIKE  @Search OR price LIKE @Search  OR min LIKE @Search  ";
+            cmd.Parameters.AddWithValue("@Search", partsSearchText.Text);
+
+            SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
+
+
+            DataTable dtRecord = new DataTable();
+            sqlDataAdap.Update(dtRecord);
+            sqlDataAdap.Fill(dtRecord);
+
+            partsDataGridView.DataSource = dtRecord;
+           
         }
     }
 }
