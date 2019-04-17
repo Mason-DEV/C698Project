@@ -51,14 +51,14 @@
             this.deleteButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             this.partsAssociatedDataGrid = new System.Windows.Forms.DataGridView();
-            this.partsAvaliableDataGrid = new System.Windows.Forms.DataGridView();
-            this.dBDataSet = new C698Project.DBDataSet();
-            this.partTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.partTableTableAdapter = new C698Project.DBDataSetTableAdapters.partTableTableAdapter();
             this.PartID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InventoryLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PricePerUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.partsAvaliableDataGrid = new System.Windows.Forms.DataGridView();
+            this.dBDataSet = new C698Project.DBDataSet();
+            this.partTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.partTableTableAdapter = new C698Project.DBDataSetTableAdapters.partTableTableAdapter();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partsAssociatedDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partsAvaliableDataGrid)).BeginInit();
@@ -146,7 +146,7 @@
             this.minTextbox.Location = new System.Drawing.Point(308, 248);
             this.minTextbox.Name = "minTextbox";
             this.minTextbox.Size = new System.Drawing.Size(63, 20);
-            this.minTextbox.TabIndex = 10;
+            this.minTextbox.TabIndex = 5;
             this.minTextbox.Text = "Min";
             // 
             // maxTextbox
@@ -154,7 +154,7 @@
             this.maxTextbox.Location = new System.Drawing.Point(172, 248);
             this.maxTextbox.Name = "maxTextbox";
             this.maxTextbox.Size = new System.Drawing.Size(97, 20);
-            this.maxTextbox.TabIndex = 11;
+            this.maxTextbox.TabIndex = 4;
             this.maxTextbox.Text = "Max";
             // 
             // productNameTextbox
@@ -162,7 +162,7 @@
             this.productNameTextbox.Location = new System.Drawing.Point(172, 145);
             this.productNameTextbox.Name = "productNameTextbox";
             this.productNameTextbox.Size = new System.Drawing.Size(130, 20);
-            this.productNameTextbox.TabIndex = 15;
+            this.productNameTextbox.TabIndex = 1;
             this.productNameTextbox.Text = "Product Name";
             // 
             // priceTextbox
@@ -170,7 +170,7 @@
             this.priceTextbox.Location = new System.Drawing.Point(172, 212);
             this.priceTextbox.Name = "priceTextbox";
             this.priceTextbox.Size = new System.Drawing.Size(130, 20);
-            this.priceTextbox.TabIndex = 16;
+            this.priceTextbox.TabIndex = 3;
             this.priceTextbox.Text = "Price";
             // 
             // invTextbox
@@ -178,7 +178,7 @@
             this.invTextbox.Location = new System.Drawing.Point(172, 180);
             this.invTextbox.Name = "invTextbox";
             this.invTextbox.Size = new System.Drawing.Size(130, 20);
-            this.invTextbox.TabIndex = 17;
+            this.invTextbox.TabIndex = 2;
             this.invTextbox.Text = "INV";
             // 
             // saveButton
@@ -209,6 +209,7 @@
             this.searchButton.TabIndex = 21;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // searchTextbox
             // 
@@ -285,6 +286,26 @@
             this.partsAssociatedDataGrid.Size = new System.Drawing.Size(430, 110);
             this.partsAssociatedDataGrid.TabIndex = 24;
             // 
+            // PartID
+            // 
+            this.PartID.HeaderText = "Part ID";
+            this.PartID.Name = "PartID";
+            // 
+            // PartName
+            // 
+            this.PartName.HeaderText = "Part Name";
+            this.PartName.Name = "PartName";
+            // 
+            // InventoryLevel
+            // 
+            this.InventoryLevel.HeaderText = "Inventory Level";
+            this.InventoryLevel.Name = "InventoryLevel";
+            // 
+            // PricePerUnit
+            // 
+            this.PricePerUnit.HeaderText = "Price per Unit";
+            this.PricePerUnit.Name = "PricePerUnit";
+            // 
             // partsAvaliableDataGrid
             // 
             this.partsAvaliableDataGrid.AllowUserToAddRows = false;
@@ -319,26 +340,6 @@
             // partTableTableAdapter
             // 
             this.partTableTableAdapter.ClearBeforeFill = true;
-            // 
-            // PartID
-            // 
-            this.PartID.HeaderText = "Part ID";
-            this.PartID.Name = "PartID";
-            // 
-            // PartName
-            // 
-            this.PartName.HeaderText = "Part Name";
-            this.PartName.Name = "PartName";
-            // 
-            // InventoryLevel
-            // 
-            this.InventoryLevel.HeaderText = "Inventory Level";
-            this.InventoryLevel.Name = "InventoryLevel";
-            // 
-            // PricePerUnit
-            // 
-            this.PricePerUnit.HeaderText = "Price per Unit";
-            this.PricePerUnit.Name = "PricePerUnit";
             // 
             // AddProduct
             // 

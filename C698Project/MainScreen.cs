@@ -50,7 +50,14 @@ namespace C698Project
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var confirm = MessageBox.Show("Are you sure to exit this Application?",
+                                    "Part Deletion",
+                                    MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            
         }
 
         private void productsAddButton_Click(object sender, EventArgs e)
@@ -168,15 +175,16 @@ namespace C698Project
                 cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit'  FROM dbo.partTable";
             }
             else {
-                cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit'  FROM dbo.partTable WHERE partID LIKE @Search OR name LIKE  @Search OR price LIKE @Search  OR min LIKE @Search  ";
+                cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit'  FROM dbo.partTable WHERE partID LIKE @Search OR name LIKE  @Search OR price LIKE @Search  OR inStock LIKE @Search  ";
             }
             
             cmd.Parameters.AddWithValue("@Search", search);
 
             SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
-
+            
 
             DataTable dtRecord = new DataTable();
+  
             sqlDataAdap.Update(dtRecord);
             sqlDataAdap.Fill(dtRecord);
 
@@ -191,12 +199,41 @@ namespace C698Project
                                     MessageBoxButtons.YesNo);
             if (confirm == DialogResult.Yes)
             {
-                // If 'Yes', do something here.
+                //verify this product has no parts assoicated
                 DataGridViewRow row = this.productsDataGridView.SelectedRows[0];
                 int selectedID;
                 try { selectedID = (int)row.Cells["productID"].Value; } catch { selectedID = (int)row.Cells["Product ID"].Value; }
+              
                 Inventory lookup = new Inventory();
                 Products toDelete = lookup.lookupProduct(selectedID);
+                Console.WriteLine("looking up parts for productID"+ toDelete.getProductID());
+                int numParts;
+                //first get assoicatedPartID
+                SqlConnection con2 = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+                con2.Open();
+
+                SqlCommand cmd2 = new SqlCommand();
+                cmd2.Connection = con2;
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "SELECT COUNT(*) FROM associatedParts where productID = @productID;";
+                cmd2.Parameters.AddWithValue("@productID", selectedID);
+
+                try
+                {
+                    numParts = (int)cmd2.ExecuteScalar();
+                }
+                catch
+                {
+                    numParts = 0;
+                }
+
+                Console.WriteLine("partid "+ numParts);
+                if (numParts !=  0) {
+                    MessageBox.Show("You can not delete a product with parts");
+                    return;
+                }
+
+
                 int productID = toDelete.getProductID();
                 bool deleted = lookup.removeProduct(productID);
                 if (deleted)
@@ -210,7 +247,7 @@ namespace C698Project
                     cmd.CommandText = "Select productID AS 'Product ID', name AS 'Product Name', inStock AS 'Inventory Level',  price AS 'Price per Unit' from productTable";
 
                     SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
-
+                    
 
                     DataTable dtRecord = new DataTable();
                     sqlDataAdap.Update(dtRecord);
@@ -224,6 +261,39 @@ namespace C698Project
             {
                 // If 'No', do something here.
             }
+        }
+
+        private void productsSearchButton_Click(object sender, EventArgs e)
+        {
+            String search = productsSearchText.Text;
+
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.Text;
+            //cmd.CommandText = "Select partID AS 'Part ID', name AS 'Part Name', inStock AS 'Inventory Level',  price AS 'Price Cost per Unit' from partTable";
+            if (search == null || search == "")
+            {
+                cmd.CommandText = "Select productID AS 'Product ID', name AS 'Product Name', inStock AS 'Inventory Level',  price AS 'Price per Unit' from productTable";
+            }
+            else
+            {
+                cmd.CommandText = "Select productID AS 'Product ID', name AS 'Product Name', inStock AS 'Inventory Level',  price AS 'Price per Unit' from productTable WHERE productID LIKE @Search OR name LIKE  @Search OR price LIKE @Search  OR inStock LIKE @Search  ";
+            }
+
+            cmd.Parameters.AddWithValue("@Search", search);
+
+            SqlDataAdapter sqlDataAdap = new SqlDataAdapter(cmd);
+
+
+            DataTable dtRecord = new DataTable();
+
+            sqlDataAdap.Update(dtRecord);
+            sqlDataAdap.Fill(dtRecord);
+
+            productsDataGridView.DataSource = dtRecord;
+
         }
     }
 }

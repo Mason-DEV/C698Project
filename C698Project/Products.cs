@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -79,7 +80,29 @@ namespace C698Project
         }
 
         public void addAssociatedPart(Part part) {
+            int associatedPartID;
+            //first get assoicatedPartID
+            SqlConnection con2 = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            con2.Open();
 
+            SqlCommand cmd2 = new SqlCommand();
+            cmd2.Connection = con2;
+            cmd2.CommandType = CommandType.Text;
+            cmd2.CommandText = "SELECT MAX(associatedPartID) FROM associatedParts;";
+
+            try
+            {
+                associatedPartID = (int)cmd2.ExecuteScalar();
+                associatedPartID = associatedPartID + 1;
+            }
+            catch
+            {
+                associatedPartID = 0;
+            }
+            con2.Close();
+
+            
+            
             SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             SqlCommand command = con.CreateCommand();
             con.Open();
@@ -92,12 +115,15 @@ namespace C698Project
             command.Connection = con;
             command.Transaction = transaction;
             command.CommandText =
-               "INSERT INTO [dbo].[associatedParts] ([productID], [partID], [name], [price], [inStock]) VALUES (@productID, @partID, @name, @price, @inStock); SELECT productID, partID, name, price, inStock FROM associatedParts WHERE(productID = @productID)";
+               "INSERT INTO [dbo].[associatedParts] ([productID], [partID], [name], [price], [inStock], [associatedPartID]) VALUES (@productID, @partID, @name, @price, @inStock , @associatedPartID);";
             command.Parameters.AddWithValue("@productID", getProductID());
+            Console.WriteLine("Inserting Part " + part.getParttID() + " " + "for productID " + getProductID());
             command.Parameters.AddWithValue("@partID", part.getParttID());
             command.Parameters.AddWithValue("@name", part.getName());
             command.Parameters.AddWithValue("@price", part.getPrice());
             command.Parameters.AddWithValue("@inStock", part.getInStock());
+            command.Parameters.AddWithValue("@associatedPartID", associatedPartID);
+            Console.WriteLine("associatePartID " + associatedPartID);
             command.ExecuteNonQuery();
             transaction.Commit();
             con.Close();
@@ -106,6 +132,7 @@ namespace C698Project
 
         }
         public bool removeAssociatedPart(int removeID) {
+
             SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             SqlCommand command = con.CreateCommand();
             con.Open();
@@ -118,7 +145,7 @@ namespace C698Project
             command.Connection = con;
             command.Transaction = transaction;
             command.CommandText =
-              "DELETE FROM[dbo].[associatedParts] WHERE(([productID] = @productID)and [partID = @partID])";
+              "DELETE FROM[dbo].[associatedParts] WHERE productID = @productID and partID = @partID";
             command.Parameters.AddWithValue("@productID", getProductID());
             command.Parameters.AddWithValue("@partID", removeID);
             command.ExecuteNonQuery();
@@ -132,11 +159,12 @@ namespace C698Project
             Console.WriteLine(productID);
             SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             con.Open();
-            var query = "SELECT productID, partID, name, price, inStock, min, max FROM dbo.associatedParts where partID = @partID and productID = @productID";
+            var query = "SELECT productID, partID, name, price, inStock FROM dbo.associatedParts where partID = @partID and productID = @productID";
             var cmd = new System.Data.SqlClient.SqlCommand();
             cmd.CommandText = query;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@partID", partID);
+            Console.WriteLine("prodcutID" +getProductID());
             cmd.Parameters.AddWithValue("@productID", getProductID());
 
             String partsID;
@@ -164,11 +192,7 @@ namespace C698Project
                 inStock = rdr["inStock"].ToString();
                 lookedUpAssocPart.setinStock(Convert.ToInt32(inStock));
 
-                min = rdr["min"].ToString();
-                lookedUpAssocPart.setMin(Convert.ToInt32(min));
-
-                max = rdr["max"].ToString();
-                lookedUpAssocPart.setMax(Convert.ToInt32(max));
+              
 
             }
             con.Close();

@@ -135,76 +135,122 @@ namespace C698Project
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Owner.Show();
-            this.Close();
+            var confirm = MessageBox.Show("Are you sure to cancel modifying this part?",
+                                      "Part Deletion",
+                                      MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                this.Owner.Show();
+                this.Close();
+            }
             
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            //Grab ID for the part we are changing
-            int id = modifyPart.getParttID();
-            //Grab fields on form and set those to Modify Part
-            String partName = partNameTextbox.Text;
 
-            Double partPrice = Convert.ToDouble(priceCostTextbox.Text);
-
-            int partInStock = Convert.ToInt32(invTextbox.Text);
-
-            int partMin = Convert.ToInt32(minTextbox.Text);
-
-            int partMax = Convert.ToInt32(maxTextbox.Text);
-
-            bool inHouse = inHouseRadio.Checked;
-
-            bool outsourced = outsourcedRadio.Checked;
-
-            if (inHouse)
+            bool pass = validation();
+            if (pass)
             {
-                Console.WriteLine("Updateding inHouse");
+                //Grab ID for the part we are changing
+                int id = modifyPart.getParttID();
+                //Grab fields on form and set those to Modify Part
+                String partName = partNameTextbox.Text;
 
-                modifyOutSource.setInhouse(1);
-                modifyOutSource.setoutsourced(0);
+                Double partPrice = Convert.ToDouble(priceCostTextbox.Text);
 
-                modifyInHouse.setInhouse(1);
-                modifyInHouse.setoutsourced(0);
-                modifyInHouse.setMachineID(Convert.ToInt32(variableTextbox.Text));
+                int partInStock = Convert.ToInt32(invTextbox.Text);
+
+                int partMin = Convert.ToInt32(minTextbox.Text);
+
+                int partMax = Convert.ToInt32(maxTextbox.Text);
+
+                bool inHouse = inHouseRadio.Checked;
+
+                bool outsourced = outsourcedRadio.Checked;
+
+                if (inHouse)
+                {
+                    Console.WriteLine("Updateding inHouse");
+
+                    modifyOutSource.setInhouse(1);
+                    modifyOutSource.setoutsourced(0);
+
+                    modifyInHouse.setInhouse(1);
+                    modifyInHouse.setoutsourced(0);
+                    modifyInHouse.setMachineID(Convert.ToInt32(variableTextbox.Text));
+
+                }
+                else
+                {
+                    Console.WriteLine("Updateding outSourced");
+
+                    modifyInHouse.setInhouse(0);
+                    modifyInHouse.setoutsourced(1);
+
+                    modifyOutSource.setInhouse(0);
+                    modifyOutSource.setoutsourced(1);
+                    modifyOutSource.setCompanyName(Convert.ToString(variableTextbox.Text));
+                }
+
+                modifyPart.setMax(partMax);
+                modifyPart.setMin(partMin);
+                modifyPart.setinStock(partInStock);
+                modifyPart.setName(partName);
+                modifyPart.setPrice(partPrice);
+
+
+                //Call updatePart passing in ID and modifyPart
+                Inventory modify = new Inventory();
+                //adds inhouse or outsourced info
+                if (inHouse)
+                {
+                    modify.houseInfo(modifyInHouse);
+                }
+                else
+                {
+                    modify.outSourceInfo(modifyOutSource);
+                }
+
+                modify.updatePart(id, modifyPart);
+
+                this.Close();
+                MainScreen main = new MainScreen();
+                main.Show();
+            }
+
+        }
+        public bool validation()
+        {
+            Console.WriteLine("checking correct field types");
+            if (System.Text.RegularExpressions.Regex.IsMatch(minTextbox.Text, "[^0-9]"))
+            {
+                MessageBox.Show("Please enter only numbers for " + minLabel.Text);
+                minTextbox.Text = minTextbox.Text.Remove(minTextbox.Text.Length - 1);
+                return false;
+            }
+
+            if (System.Text.RegularExpressions.Regex.IsMatch(maxTextbox.Text, "[^0-9]"))
+            {
+                MessageBox.Show("Please enter only numbers for " + maxLabel.Text);
+                maxTextbox.Text = maxTextbox.Text.Remove(maxTextbox.Text.Length - 1);
+                return false;
+            }
+
+            if (Convert.ToInt32(minTextbox.Text) > Convert.ToInt32(maxTextbox.Text))
+            {
+                MessageBox.Show("The minimum value can not be less than the maximum value");
+                return false;
 
             }
-            else {
-                Console.WriteLine("Updateding outSourced");
-
-                modifyInHouse.setInhouse(0);
-                modifyInHouse.setoutsourced(1);
-
-                modifyOutSource.setInhouse(0);
-                modifyOutSource.setoutsourced(1);
-                modifyOutSource.setCompanyName(Convert.ToString(variableTextbox.Text));
+            if (System.Text.RegularExpressions.Regex.IsMatch(invTextbox.Text, "[^0-9]"))
+            {
+                MessageBox.Show("Please enter only numbers for " + invLabel.Text);
+                invTextbox.Text = invTextbox.Text.Remove(invTextbox.Text.Length - 1);
+                return false;
             }
 
-            modifyPart.setMax(partMax);
-            modifyPart.setMin(partMin);
-            modifyPart.setinStock(partInStock);
-            modifyPart.setName(partName);
-            modifyPart.setPrice(partPrice);
-            
-            
-            //Call updatePart passing in ID and modifyPart
-            Inventory modify = new Inventory();
-            //adds inhouse or outsourced info
-            if (inHouse) {
-                modify.houseInfo(modifyInHouse);
-            }
-            else {
-                modify.outSourceInfo(modifyOutSource);
-            }
-         
-            modify.updatePart(id, modifyPart);
-            
-            this.Close();
-            MainScreen main = new MainScreen();
-            main.Show();
-
+            return true;
         }
     }
 }

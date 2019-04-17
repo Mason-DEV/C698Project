@@ -70,7 +70,7 @@
             this.InventoryManagmentSystem.ForeColor = System.Drawing.Color.DarkBlue;
             this.InventoryManagmentSystem.Location = new System.Drawing.Point(41, 34);
             this.InventoryManagmentSystem.Name = "InventoryManagmentSystem";
-            this.InventoryManagmentSystem.Size = new System.Drawing.Size(215, 16);
+            this.InventoryManagmentSystem.Size = new System.Drawing.Size(210, 16);
             this.InventoryManagmentSystem.TabIndex = 0;
             this.InventoryManagmentSystem.Text = "Inventory Managment System";
             // 
@@ -279,6 +279,7 @@
             this.productsSearchButton.TabIndex = 1;
             this.productsSearchButton.Text = "Search";
             this.productsSearchButton.UseVisualStyleBackColor = true;
+            this.productsSearchButton.Click += new System.EventHandler(this.productsSearchButton_Click);
             // 
             // exitButton
             // 

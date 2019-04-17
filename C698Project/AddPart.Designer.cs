@@ -130,7 +130,7 @@
             this.minTextbox.Location = new System.Drawing.Point(324, 215);
             this.minTextbox.Name = "minTextbox";
             this.minTextbox.Size = new System.Drawing.Size(63, 20);
-            this.minTextbox.TabIndex = 10;
+            this.minTextbox.TabIndex = 5;
             this.minTextbox.Text = "Min";
             // 
             // maxTextbox
@@ -138,8 +138,8 @@
             this.maxTextbox.Location = new System.Drawing.Point(188, 215);
             this.maxTextbox.Name = "maxTextbox";
             this.maxTextbox.Size = new System.Drawing.Size(97, 20);
-            this.maxTextbox.TabIndex = 11;
-            this.maxTextbox.Text = "Min";
+            this.maxTextbox.TabIndex = 4;
+            this.maxTextbox.Text = "Max";
             // 
             // variableLabel
             // 
@@ -179,7 +179,7 @@
             this.partNameTextbox.Location = new System.Drawing.Point(188, 112);
             this.partNameTextbox.Name = "partNameTextbox";
             this.partNameTextbox.Size = new System.Drawing.Size(130, 20);
-            this.partNameTextbox.TabIndex = 15;
+            this.partNameTextbox.TabIndex = 1;
             this.partNameTextbox.Text = "Part Name";
             // 
             // priceCostTextbox
@@ -187,7 +187,7 @@
             this.priceCostTextbox.Location = new System.Drawing.Point(188, 179);
             this.priceCostTextbox.Name = "priceCostTextbox";
             this.priceCostTextbox.Size = new System.Drawing.Size(130, 20);
-            this.priceCostTextbox.TabIndex = 16;
+            this.priceCostTextbox.TabIndex = 3;
             this.priceCostTextbox.Text = "Price/Cost";
             // 
             // invTextbox
@@ -195,7 +195,7 @@
             this.invTextbox.Location = new System.Drawing.Point(188, 147);
             this.invTextbox.Name = "invTextbox";
             this.invTextbox.Size = new System.Drawing.Size(130, 20);
-            this.invTextbox.TabIndex = 17;
+            this.invTextbox.TabIndex = 2;
             this.invTextbox.Text = "INV";
             // 
             // variableTextbox
@@ -203,7 +203,7 @@
             this.variableTextbox.Location = new System.Drawing.Point(188, 251);
             this.variableTextbox.Name = "variableTextbox";
             this.variableTextbox.Size = new System.Drawing.Size(110, 20);
-            this.variableTextbox.TabIndex = 18;
+            this.variableTextbox.TabIndex = 6;
             this.variableTextbox.Text = "Company Nm";
             // 
             // saveButton

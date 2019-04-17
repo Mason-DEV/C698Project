@@ -290,6 +290,29 @@ namespace C698Project
 
         public void updateProduct(int productID, Products product) {
 
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction();
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+                "UPDATE productTable SET name = @name, price = @price, inStock = @inStock, min = @min, max = @max WHERE  productID = @productID;";
+            command.Parameters.AddWithValue("@productID", productID);
+            command.Parameters.AddWithValue("@name", product.getName());
+            command.Parameters.AddWithValue("@price", product.getPrice());
+            command.Parameters.AddWithValue("@inStock", product.getInStock());
+            command.Parameters.AddWithValue("@min", product.getProductMin());
+            command.Parameters.AddWithValue("@max", product.getMax());
+            var affected = command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+
         }
        
     }

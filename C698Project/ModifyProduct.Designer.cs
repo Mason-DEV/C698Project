@@ -136,7 +136,7 @@
             this.minTextbox.Location = new System.Drawing.Point(308, 248);
             this.minTextbox.Name = "minTextbox";
             this.minTextbox.Size = new System.Drawing.Size(63, 20);
-            this.minTextbox.TabIndex = 10;
+            this.minTextbox.TabIndex = 5;
             this.minTextbox.Text = "Min";
             // 
             // maxTextbox
@@ -144,7 +144,7 @@
             this.maxTextbox.Location = new System.Drawing.Point(172, 248);
             this.maxTextbox.Name = "maxTextbox";
             this.maxTextbox.Size = new System.Drawing.Size(97, 20);
-            this.maxTextbox.TabIndex = 11;
+            this.maxTextbox.TabIndex = 4;
             this.maxTextbox.Text = "Min";
             // 
             // productNameTextbox
@@ -152,7 +152,7 @@
             this.productNameTextbox.Location = new System.Drawing.Point(172, 145);
             this.productNameTextbox.Name = "productNameTextbox";
             this.productNameTextbox.Size = new System.Drawing.Size(130, 20);
-            this.productNameTextbox.TabIndex = 15;
+            this.productNameTextbox.TabIndex = 1;
             this.productNameTextbox.Text = "Product Name";
             // 
             // priceTextbox
@@ -160,7 +160,7 @@
             this.priceTextbox.Location = new System.Drawing.Point(172, 212);
             this.priceTextbox.Name = "priceTextbox";
             this.priceTextbox.Size = new System.Drawing.Size(130, 20);
-            this.priceTextbox.TabIndex = 16;
+            this.priceTextbox.TabIndex = 3;
             this.priceTextbox.Text = "Price";
             // 
             // invTextbox
@@ -168,7 +168,7 @@
             this.invTextbox.Location = new System.Drawing.Point(172, 180);
             this.invTextbox.Name = "invTextbox";
             this.invTextbox.Size = new System.Drawing.Size(130, 20);
-            this.invTextbox.TabIndex = 17;
+            this.invTextbox.TabIndex = 2;
             this.invTextbox.Text = "INV";
             // 
             // saveButton
@@ -179,6 +179,7 @@
             this.saveButton.TabIndex = 19;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // cancelButton
             // 
@@ -198,6 +199,7 @@
             this.searchButton.TabIndex = 21;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // searchTextbox
             // 
@@ -242,6 +244,7 @@
             this.deleteButton.TabIndex = 26;
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // addButton
             // 
@@ -251,12 +254,24 @@
             this.addButton.TabIndex = 25;
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // assocPartsDataGridView
             // 
+            this.assocPartsDataGridView.AllowUserToAddRows = false;
+            this.assocPartsDataGridView.AllowUserToDeleteRows = false;
+            this.assocPartsDataGridView.AllowUserToResizeColumns = false;
+            this.assocPartsDataGridView.AllowUserToResizeRows = false;
+            this.assocPartsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.assocPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.assocPartsDataGridView.Location = new System.Drawing.Point(455, 235);
             this.assocPartsDataGridView.Name = "assocPartsDataGridView";
+            this.assocPartsDataGridView.RowHeadersVisible = false;
+            this.assocPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.assocPartsDataGridView.ShowCellErrors = false;
+            this.assocPartsDataGridView.ShowCellToolTips = false;
+            this.assocPartsDataGridView.ShowEditingIcon = false;
+            this.assocPartsDataGridView.ShowRowErrors = false;
             this.assocPartsDataGridView.Size = new System.Drawing.Size(430, 110);
             this.assocPartsDataGridView.TabIndex = 24;
             // 
