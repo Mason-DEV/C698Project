@@ -38,7 +38,7 @@
             this.maxLabel = new System.Windows.Forms.Label();
             this.minLabel = new System.Windows.Forms.Label();
             this.minTextbox = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.maxTextbox = new System.Windows.Forms.TextBox();
             this.productNameTextbox = new System.Windows.Forms.TextBox();
             this.priceTextbox = new System.Windows.Forms.TextBox();
             this.invTextbox = new System.Windows.Forms.TextBox();
@@ -49,11 +49,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.deleteButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.assocPartsDataGridView = new System.Windows.Forms.DataGridView();
+            this.allPartsDataGridView = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assocPartsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.allPartsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // modifyProductLabel
@@ -139,13 +139,13 @@
             this.minTextbox.TabIndex = 10;
             this.minTextbox.Text = "Min";
             // 
-            // textBox1
+            // maxTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(172, 248);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(97, 20);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "Min";
+            this.maxTextbox.Location = new System.Drawing.Point(172, 248);
+            this.maxTextbox.Name = "maxTextbox";
+            this.maxTextbox.Size = new System.Drawing.Size(97, 20);
+            this.maxTextbox.TabIndex = 11;
+            this.maxTextbox.Text = "Min";
             // 
             // productNameTextbox
             // 
@@ -210,8 +210,8 @@
             // 
             this.panel1.Controls.Add(this.deleteButton);
             this.panel1.Controls.Add(this.addButton);
-            this.panel1.Controls.Add(this.dataGridView2);
-            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Controls.Add(this.assocPartsDataGridView);
+            this.panel1.Controls.Add(this.allPartsDataGridView);
             this.panel1.Controls.Add(this.searchTextbox);
             this.panel1.Controls.Add(this.searchButton);
             this.panel1.Controls.Add(this.cancelButton);
@@ -219,7 +219,7 @@
             this.panel1.Controls.Add(this.invTextbox);
             this.panel1.Controls.Add(this.priceTextbox);
             this.panel1.Controls.Add(this.productNameTextbox);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.maxTextbox);
             this.panel1.Controls.Add(this.minTextbox);
             this.panel1.Controls.Add(this.minLabel);
             this.panel1.Controls.Add(this.maxLabel);
@@ -252,21 +252,29 @@
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // assocPartsDataGridView
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(455, 235);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(430, 110);
-            this.dataGridView2.TabIndex = 24;
+            this.assocPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.assocPartsDataGridView.Location = new System.Drawing.Point(455, 235);
+            this.assocPartsDataGridView.Name = "assocPartsDataGridView";
+            this.assocPartsDataGridView.Size = new System.Drawing.Size(430, 110);
+            this.assocPartsDataGridView.TabIndex = 24;
             // 
-            // dataGridView1
+            // allPartsDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(456, 75);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(430, 107);
-            this.dataGridView1.TabIndex = 23;
+            this.allPartsDataGridView.AllowUserToAddRows = false;
+            this.allPartsDataGridView.AllowUserToDeleteRows = false;
+            this.allPartsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.allPartsDataGridView.Location = new System.Drawing.Point(456, 75);
+            this.allPartsDataGridView.Name = "allPartsDataGridView";
+            this.allPartsDataGridView.RowHeadersVisible = false;
+            this.allPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.allPartsDataGridView.ShowCellErrors = false;
+            this.allPartsDataGridView.ShowCellToolTips = false;
+            this.allPartsDataGridView.ShowEditingIcon = false;
+            this.allPartsDataGridView.ShowRowErrors = false;
+            this.allPartsDataGridView.Size = new System.Drawing.Size(430, 107);
+            this.allPartsDataGridView.TabIndex = 23;
             // 
             // ModifyProduct
             // 
@@ -279,8 +287,8 @@
             this.Text = "AddProduct";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assocPartsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.allPartsDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -296,7 +304,7 @@
         private System.Windows.Forms.Label maxLabel;
         private System.Windows.Forms.Label minLabel;
         private System.Windows.Forms.TextBox minTextbox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox maxTextbox;
         private System.Windows.Forms.TextBox productNameTextbox;
         private System.Windows.Forms.TextBox priceTextbox;
         private System.Windows.Forms.TextBox invTextbox;
@@ -305,9 +313,9 @@
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchTextbox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView allPartsDataGridView;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView assocPartsDataGridView;
     }
 }

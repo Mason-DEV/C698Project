@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DBConnectionString" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.C698Project.Properties.Settings.GlobalReference.Default.DBConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.C698Project.Properties.Settings.GlobalReference.Default.DBConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="partTableTableAdapter" GeneratorDataComponentClassName="partTableTableAdapter" Name="partTable" UserDataComponentName="partTableTableAdapter">
@@ -136,7 +136,7 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
   <xs:element name="DBDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DBDataSet" msprop:Generator_UserDSName="DBDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="partTable" msprop:Generator_TableClassName="partTableDataTable" msprop:Generator_TableVarName="tablepartTable" msprop:Generator_TablePropName="partTable" msprop:Generator_RowDeletingName="partTableRowDeleting" msprop:Generator_RowChangingName="partTableRowChanging" msprop:Generator_RowEvHandlerName="partTableRowChangeEventHandler" msprop:Generator_RowDeletedName="partTableRowDeleted" msprop:Generator_UserTableName="partTable" msprop:Generator_RowChangedName="partTableRowChanged" msprop:Generator_RowEvArgName="partTableRowChangeEvent" msprop:Generator_RowClassName="partTableRow">
+        <xs:element name="partTable" msprop:Generator_TableClassName="partTableDataTable" msprop:Generator_TableVarName="tablepartTable" msprop:Generator_RowChangedName="partTableRowChanged" msprop:Generator_TablePropName="partTable" msprop:Generator_RowDeletingName="partTableRowDeleting" msprop:Generator_RowChangingName="partTableRowChanging" msprop:Generator_RowEvHandlerName="partTableRowChangeEventHandler" msprop:Generator_RowDeletedName="partTableRowDeleted" msprop:Generator_RowClassName="partTableRow" msprop:Generator_UserTableName="partTable" msprop:Generator_RowEvArgName="partTableRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="partID" msprop:Generator_ColumnVarNameInTable="columnpartID" msprop:Generator_ColumnPropNameInRow="partID" msprop:Generator_ColumnPropNameInTable="partIDColumn" msprop:Generator_UserColumnName="partID" type="xs:int" />
@@ -158,11 +158,28 @@ SELECT partID, name, price, inStock, min, max FROM partTable WHERE (partID = @pa
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="productTable" msprop:Generator_TableClassName="productTableDataTable" msprop:Generator_TableVarName="tableproductTable" msprop:Generator_TablePropName="productTable" msprop:Generator_RowDeletingName="productTableRowDeleting" msprop:Generator_RowChangingName="productTableRowChanging" msprop:Generator_RowEvHandlerName="productTableRowChangeEventHandler" msprop:Generator_RowDeletedName="productTableRowDeleted" msprop:Generator_UserTableName="productTable" msprop:Generator_RowChangedName="productTableRowChanged" msprop:Generator_RowEvArgName="productTableRowChangeEvent" msprop:Generator_RowClassName="productTableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="productID" msprop:Generator_ColumnVarNameInTable="columnproductID" msprop:Generator_ColumnPropNameInRow="productID" msprop:Generator_ColumnPropNameInTable="productIDColumn" msprop:Generator_UserColumnName="productID" type="xs:string" />
+              <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name" type="xs:string" minOccurs="0" />
+              <xs:element name="price" msprop:Generator_ColumnVarNameInTable="columnprice" msprop:Generator_ColumnPropNameInRow="price" msprop:Generator_ColumnPropNameInTable="priceColumn" msprop:Generator_UserColumnName="price" type="xs:string" minOccurs="0" />
+              <xs:element name="inStock" msprop:Generator_ColumnVarNameInTable="columninStock" msprop:Generator_ColumnPropNameInRow="inStock" msprop:Generator_ColumnPropNameInTable="inStockColumn" msprop:Generator_UserColumnName="inStock" type="xs:string" minOccurs="0" />
+              <xs:element name="min" msprop:Generator_ColumnVarNameInTable="columnmin" msprop:Generator_ColumnPropNameInRow="min" msprop:Generator_ColumnPropNameInTable="minColumn" msprop:Generator_UserColumnName="min" type="xs:string" minOccurs="0" />
+              <xs:element name="max" msprop:Generator_ColumnVarNameInTable="columnmax" msprop:Generator_ColumnPropNameInRow="max" msprop:Generator_ColumnPropNameInTable="maxColumn" msprop:Generator_UserColumnName="max" type="xs:string" minOccurs="0" />
+              <xs:element name="associatedPartID" msprop:Generator_ColumnVarNameInTable="columnassociatedPartID" msprop:Generator_ColumnPropNameInRow="associatedPartID" msprop:Generator_ColumnPropNameInTable="associatedPartIDColumn" msprop:Generator_UserColumnName="associatedPartID" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:partTable" />
       <xs:field xpath="mstns:partID" />
+    </xs:unique>
+    <xs:unique name="productTable_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:productTable" />
+      <xs:field xpath="mstns:productID" />
     </xs:unique>
   </xs:element>
 </xs:schema>

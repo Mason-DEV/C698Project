@@ -16,7 +16,7 @@ namespace C698Project
         int inHouseID;
         int outSourcedID;
         int machineID;
-        string companyName = "null";
+        string companyName;
 
         public void addPart(Part part) {
             //Need to get correct inHouse or Outsourced information
@@ -24,7 +24,7 @@ namespace C698Project
             Console.WriteLine(inHouseID);
             Console.WriteLine(outSourcedID);
             Console.WriteLine(machineID);
-
+            Console.WriteLine(companyName);
 
             SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             SqlCommand command = con.CreateCommand();
@@ -64,12 +64,19 @@ namespace C698Project
                 machineID = info.getMachineID();
                 companyName = "";
             }
-            else
+          
+        }
+
+        public void outSourceInfo(Outsourced info)
+        {
+            outSourcedID = info.getoutsourcedID();
+            inHouseID = info.getInHouseID();
+
+            if (outSourcedID == 1)
             {
+                companyName = info.getCompanyName();
                 machineID = 0;
-                companyName = "Name";
             }
-           
         }
 
         public bool deletePart(Part part) {
@@ -152,6 +159,7 @@ namespace C698Project
         public void updatePart(int partID, Part part) {
             Console.WriteLine("Updating Part");
 
+            Console.WriteLine("Setting machineID to " + machineID);
 
             SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
             SqlCommand command = con.CreateCommand();
@@ -165,17 +173,122 @@ namespace C698Project
             command.Connection = con;
             command.Transaction = transaction;
             command.CommandText =
-                "UPDATE partTable SET name = @name, price = @price, inStock = @inStock, min = @min, max = @max WHERE  partID = @partID;";
+                "UPDATE partTable SET name = @name, price = @price, inStock = @inStock, min = @min, max = @max,  inHouse = @inHouseID, outsourced = @outSourcedID ,companyName = @companyName, machineID = @machineID WHERE  partID = @partID;";
             command.Parameters.AddWithValue("@partID", partID);
             command.Parameters.AddWithValue("@name", part.getName());
             command.Parameters.AddWithValue("@price", part.getPrice());
             command.Parameters.AddWithValue("@inStock", part.getInStock());
             command.Parameters.AddWithValue("@min", part.getMin());
             command.Parameters.AddWithValue("@max", part.getMax());
+            command.Parameters.AddWithValue("@inHouseID", inHouseID);
+            command.Parameters.AddWithValue("@outSourcedID", outSourcedID);
+            command.Parameters.AddWithValue("@companyName", companyName);
+            command.Parameters.AddWithValue("@machineID", machineID);
             var affected  = command.ExecuteNonQuery();
             transaction.Commit();
             con.Close();
             Console.WriteLine("Updated Part "+affected);
+
+        }
+
+        public void addProduct(Products product) {
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction();
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+               "INSERT INTO [dbo].[productTable] ([productID], [name], [price], [inStock], [min], [max]) VALUES (@productID, @name, @price, @inStock, @min, @max); SELECT productID, name, price, inStock, min, max FROM productTable WHERE(productID = @productID)";
+            command.Parameters.AddWithValue("@productID", product.getProductID());
+            command.Parameters.AddWithValue("@name", product.getName());
+            command.Parameters.AddWithValue("@price", product.getPrice());
+            command.Parameters.AddWithValue("@inStock", product.getInStock());
+            command.Parameters.AddWithValue("@min", product.getProductMin());
+            command.Parameters.AddWithValue("@max", product.getMax());
+            command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+
+        }
+
+        public bool removeProduct(int productID) {
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction("SampleTransaction");
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+              "DELETE FROM[dbo].[productTable] WHERE(([productID] = @productID))";
+            command.Parameters.AddWithValue("@productID", productID);
+            command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+
+            return true;
+        }
+
+        public Products lookupProduct(int productID) {
+
+            Console.WriteLine(productID);
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            con.Open();
+            var query = "SELECT productID, name, price, inStock, min, max FROM dbo.productTable where productID = @productID";
+            var cmd = new System.Data.SqlClient.SqlCommand();
+            cmd.CommandText = query;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@productID", productID);
+
+            String ID;
+            String name;
+            String price;
+            String inStock;
+            String min;
+            String max;
+            Products lookedupProduct = new Products();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            // Fill the strings with the values retrieved, convert to types as needed
+            while (rdr.Read())
+            {
+
+                ID = rdr["productID"].ToString();
+                lookedupProduct.setProductID(Convert.ToInt32(ID));
+
+                name = rdr["name"].ToString();
+                lookedupProduct.setName(name);
+
+                price = rdr["price"].ToString();
+                lookedupProduct.setPrice(Convert.ToDouble(price));
+
+                inStock = rdr["inStock"].ToString();
+                lookedupProduct.setinStock(Convert.ToInt32(inStock));
+
+                min = rdr["min"].ToString();
+                lookedupProduct.setMin(Convert.ToInt32(min));
+
+                max = rdr["max"].ToString();
+                lookedupProduct.setMax(Convert.ToInt32(max));
+
+
+
+            }
+            con.Close();
+            return lookedupProduct;
+
+        }
+
+        public void updateProduct(int productID, Products product) {
 
         }
        

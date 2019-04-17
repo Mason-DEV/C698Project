@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace C698Project
 {
@@ -74,6 +76,103 @@ namespace C698Project
         public int getMax()
         {
             return max;
+        }
+
+        public void addAssociatedPart(Part part) {
+
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction();
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+               "INSERT INTO [dbo].[associatedParts] ([productID], [partID], [name], [price], [inStock]) VALUES (@productID, @partID, @name, @price, @inStock); SELECT productID, partID, name, price, inStock FROM associatedParts WHERE(productID = @productID)";
+            command.Parameters.AddWithValue("@productID", getProductID());
+            command.Parameters.AddWithValue("@partID", part.getParttID());
+            command.Parameters.AddWithValue("@name", part.getName());
+            command.Parameters.AddWithValue("@price", part.getPrice());
+            command.Parameters.AddWithValue("@inStock", part.getInStock());
+            command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+
+
+
+        }
+        public bool removeAssociatedPart(int removeID) {
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            SqlCommand command = con.CreateCommand();
+            con.Open();
+            SqlTransaction transaction;
+            // Start a local transaction.
+            transaction = con.BeginTransaction("SampleTransaction");
+
+            // Must assign both transaction object and connection
+            // to Command object for a pending local transaction
+            command.Connection = con;
+            command.Transaction = transaction;
+            command.CommandText =
+              "DELETE FROM[dbo].[associatedParts] WHERE(([productID] = @productID)and [partID = @partID])";
+            command.Parameters.AddWithValue("@productID", getProductID());
+            command.Parameters.AddWithValue("@partID", removeID);
+            command.ExecuteNonQuery();
+            transaction.Commit();
+            con.Close();
+
+            return true;
+        }
+        public Part lookupAssociatedPart(int partID) {
+
+            Console.WriteLine(productID);
+            SqlConnection con = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + Application.StartupPath + "\\DB.mdf; Integrated Security=True");
+            con.Open();
+            var query = "SELECT productID, partID, name, price, inStock, min, max FROM dbo.associatedParts where partID = @partID and productID = @productID";
+            var cmd = new System.Data.SqlClient.SqlCommand();
+            cmd.CommandText = query;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@partID", partID);
+            cmd.Parameters.AddWithValue("@productID", getProductID());
+
+            String partsID;
+            String name;
+            String price;
+            String inStock;
+            String min;
+            String max;
+            Part lookedUpAssocPart = new Part();
+            SqlDataReader rdr = cmd.ExecuteReader();
+            // Fill the strings with the values retrieved, convert to types as needed
+            while (rdr.Read())
+            {
+             
+
+                partsID = rdr["partID"].ToString();
+                lookedUpAssocPart.setPartID(Convert.ToInt32(partsID));
+
+                name = rdr["name"].ToString();
+                lookedUpAssocPart.setName(name);
+
+                price = rdr["price"].ToString();
+                lookedUpAssocPart.setPrice(Convert.ToDouble(price));
+
+                inStock = rdr["inStock"].ToString();
+                lookedUpAssocPart.setinStock(Convert.ToInt32(inStock));
+
+                min = rdr["min"].ToString();
+                lookedUpAssocPart.setMin(Convert.ToInt32(min));
+
+                max = rdr["max"].ToString();
+                lookedUpAssocPart.setMax(Convert.ToInt32(max));
+
+            }
+            con.Close();
+            return lookedUpAssocPart;
         }
 
     }

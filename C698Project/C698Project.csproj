@@ -72,11 +72,13 @@
   <ItemGroup>
     <Compile Include="DBDataSet.cs">
       <DependentUpon>DBDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="DBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DBDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Inhouse.cs" />
     <Compile Include="Inventory.cs" />
@@ -142,14 +144,17 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="DBDataSet.xsc">
       <DependentUpon>DBDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DBDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="DBDataSet.xss">
       <DependentUpon>DBDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

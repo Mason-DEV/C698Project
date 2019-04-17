@@ -15,7 +15,9 @@ namespace C698Project
         private int min;
         private int max;
 
+        bool house;
         Inhouse info;
+        Outsourced infoO;
 
 
         public void setPartID(int partIDNum)
@@ -85,19 +87,30 @@ namespace C698Project
 
         public void addThePart() {
             Inventory part= new Inventory();
-            part.houseInfo(info);
+            if (house) { part.houseInfo(info); } else { part.outSourceInfo(infoO); }
+           
             part.addPart(this); 
         }
 
         public void getPartINFO(int inHouse, int outsourced, string companyName, int machineID) {
             if (inHouse == 1)
             {
+                house = true;
                 Inhouse inHouseINFO = new Inhouse();
                 inHouseINFO.setInhouse(inHouse);
                 inHouseINFO.setMachineID(machineID);
                 inHouseINFO.setoutsourced(outsourced);
                 //return inHouseINFO;
                 info = inHouseINFO;
+            }
+            else {
+                house = false;
+                Outsourced outSourceINFO = new Outsourced();
+                outSourceINFO.setInhouse(inHouse);
+                outSourceINFO.setoutsourced(outsourced);
+                outSourceINFO.setCompanyName(companyName);
+                infoO = outSourceINFO;
+
             }
            
         }

@@ -70,7 +70,7 @@
             this.InventoryManagmentSystem.ForeColor = System.Drawing.Color.DarkBlue;
             this.InventoryManagmentSystem.Location = new System.Drawing.Point(41, 34);
             this.InventoryManagmentSystem.Name = "InventoryManagmentSystem";
-            this.InventoryManagmentSystem.Size = new System.Drawing.Size(210, 16);
+            this.InventoryManagmentSystem.Size = new System.Drawing.Size(215, 16);
             this.InventoryManagmentSystem.TabIndex = 0;
             this.InventoryManagmentSystem.Text = "Inventory Managment System";
             // 
@@ -220,6 +220,7 @@
             this.productsDeleteButton.TabIndex = 8;
             this.productsDeleteButton.Text = "Delete";
             this.productsDeleteButton.UseVisualStyleBackColor = true;
+            this.productsDeleteButton.Click += new System.EventHandler(this.productsDeleteButton_Click);
             // 
             // productsModifyButton
             // 
@@ -245,12 +246,21 @@
             // 
             this.productsDataGridView.AllowUserToAddRows = false;
             this.productsDataGridView.AllowUserToDeleteRows = false;
+            this.productsDataGridView.AllowUserToResizeColumns = false;
+            this.productsDataGridView.AllowUserToResizeRows = false;
             this.productsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.productsDataGridView.ColumnHeadersHeight = 30;
+            this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.productsDataGridView.Location = new System.Drawing.Point(11, 92);
             this.productsDataGridView.Name = "productsDataGridView";
             this.productsDataGridView.ReadOnly = true;
             this.productsDataGridView.RowHeadersVisible = false;
+            this.productsDataGridView.RowHeadersWidth = 10;
+            this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.productsDataGridView.ShowCellErrors = false;
+            this.productsDataGridView.ShowCellToolTips = false;
+            this.productsDataGridView.ShowEditingIcon = false;
+            this.productsDataGridView.ShowRowErrors = false;
             this.productsDataGridView.Size = new System.Drawing.Size(515, 163);
             this.productsDataGridView.TabIndex = 3;
             // 

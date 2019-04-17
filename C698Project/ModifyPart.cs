@@ -15,6 +15,7 @@ namespace C698Project
     {
         Part modifyPart = new Part();
         Inhouse modifyInHouse = new Inhouse();
+        Outsourced modifyOutSource = new Outsourced();
         String inHouseValue;
         String outSourceValue;
         String machineID;
@@ -45,6 +46,7 @@ namespace C698Project
             String inStock;
             String min;
             String max;
+            
 
                        
             SqlDataReader rdr = cmd.ExecuteReader();
@@ -77,11 +79,11 @@ namespace C698Project
                 maxTextbox.Text = max;
 
                 inHouseValue = rdr["inHouse"].ToString();
-                modifyInHouse.setInhouse(Convert.ToInt32(inHouseValue));
+                //modifyInHouse.setInhouse(Convert.ToInt32(inHouseValue));
                 inHouseRadio.Checked = Convert.ToBoolean(Convert.ToInt32(inHouseValue));
 
                 outSourceValue = rdr["outSourced"].ToString();
-                modifyInHouse.setInhouse(Convert.ToInt32(outSourceValue));
+               // modifyInHouse.setInhouse(Convert.ToInt32(outSourceValue));
                 outsourcedRadio.Checked = Convert.ToBoolean(Convert.ToInt32(outSourceValue));
 
                 if (inHouseRadio.Checked == true)
@@ -89,10 +91,13 @@ namespace C698Project
                     machineID = rdr["machineID"].ToString();
                     modifyInHouse.setMachineID(Convert.ToInt32(machineID));
                     variableTextbox.Text = machineID;
+                    
 
                 }
                 else {
-                    
+                    companyName = rdr["companyName"].ToString();
+                    //modifyInHouse.setMachineID(Convert.ToInt32(machineID));
+                    variableTextbox.Text = companyName;
                 }
 
             }
@@ -150,6 +155,33 @@ namespace C698Project
 
             int partMax = Convert.ToInt32(maxTextbox.Text);
 
+            bool inHouse = inHouseRadio.Checked;
+
+            bool outsourced = outsourcedRadio.Checked;
+
+            if (inHouse)
+            {
+                Console.WriteLine("Updateding inHouse");
+
+                modifyOutSource.setInhouse(1);
+                modifyOutSource.setoutsourced(0);
+
+                modifyInHouse.setInhouse(1);
+                modifyInHouse.setoutsourced(0);
+                modifyInHouse.setMachineID(Convert.ToInt32(variableTextbox.Text));
+
+            }
+            else {
+                Console.WriteLine("Updateding outSourced");
+
+                modifyInHouse.setInhouse(0);
+                modifyInHouse.setoutsourced(1);
+
+                modifyOutSource.setInhouse(0);
+                modifyOutSource.setoutsourced(1);
+                modifyOutSource.setCompanyName(Convert.ToString(variableTextbox.Text));
+            }
+
             modifyPart.setMax(partMax);
             modifyPart.setMin(partMin);
             modifyPart.setinStock(partInStock);
@@ -159,9 +191,14 @@ namespace C698Project
             
             //Call updatePart passing in ID and modifyPart
             Inventory modify = new Inventory();
-            modifyInHouse.setInhouse(Convert.ToInt32(inHouseValue));
-            modifyInHouse.setMachineID(Convert.ToInt32(machineID));
-            modifyInHouse.setInhouse(Convert.ToInt32(outSourceValue));
+            //adds inhouse or outsourced info
+            if (inHouse) {
+                modify.houseInfo(modifyInHouse);
+            }
+            else {
+                modify.outSourceInfo(modifyOutSource);
+            }
+         
             modify.updatePart(id, modifyPart);
             
             this.Close();

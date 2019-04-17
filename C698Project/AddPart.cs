@@ -115,7 +115,7 @@ namespace C698Project
             newPart.setPartID(partID);
             if (inHouse)
             {
-                newPart.getPartINFO(inHouseValue, outSourcedValue, null, machineID);
+                newPart.getPartINFO(inHouseValue, outSourcedValue, companyName, machineID);
                 //Inhouse mach = new Inhouse();
                 //mach.setMachineID(machineID);
                 //mach.setInhouse(inHouseValue);
@@ -125,7 +125,7 @@ namespace C698Project
             else
             {
 
-
+                newPart.getPartINFO(inHouseValue, outSourcedValue, companyName, machineID);
             }
 
 

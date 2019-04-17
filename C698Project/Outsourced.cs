@@ -9,6 +9,8 @@ namespace C698Project
     class Outsourced
     {
         private string companyName;
+        private int inHouse;
+        private int outsourced;
 
         public void setCompanyName(string name)
         {
@@ -18,6 +20,25 @@ namespace C698Project
         public string getCompanyName()
         {
             return companyName;
+        }
+        public void setInhouse(int inHouseID)
+        {
+            inHouse = inHouseID;
+        }
+
+        public int getInHouseID()
+        {
+            return inHouse;
+        }
+
+        public void setoutsourced(int outsourcedID)
+        {
+            outsourced = outsourcedID;
+        }
+
+        public int getoutsourcedID()
+        {
+            return outsourced;
         }
     }
 }
