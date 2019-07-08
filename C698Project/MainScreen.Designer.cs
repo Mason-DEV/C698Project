@@ -253,14 +253,8 @@
             this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.productsDataGridView.Location = new System.Drawing.Point(11, 92);
             this.productsDataGridView.Name = "productsDataGridView";
-            this.productsDataGridView.ReadOnly = true;
-            this.productsDataGridView.RowHeadersVisible = false;
-            this.productsDataGridView.RowHeadersWidth = 10;
+            this.productsDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.productsDataGridView.ShowCellErrors = false;
-            this.productsDataGridView.ShowCellToolTips = false;
-            this.productsDataGridView.ShowEditingIcon = false;
-            this.productsDataGridView.ShowRowErrors = false;
             this.productsDataGridView.Size = new System.Drawing.Size(515, 163);
             this.productsDataGridView.TabIndex = 3;
             // 
